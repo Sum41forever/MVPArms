@@ -69,17 +69,18 @@ public class MultiPersenterActivity extends BaseActivity<UserPresenter> implemen
     RecyclerView.LayoutManager mLayoutManager;
     @Inject
     RecyclerView.Adapter mUserAdapter;
-    //注意2个Adapter的类型是一样的，必须加上@Named来让Dagger知道注入哪一个
+    /**
+     * 注意2个Adapter的类型是一样的.
+     * 必须加上@Named来让Dagger知道注入哪一个
+     */
     @Inject
     @Named("girl")
     RecyclerView.Adapter mGirlAdapter;
-    //复用注入的P
     @Inject
     GirlPresenter mGirlPresenter;
 
     private Paginate mPaginate;
     private boolean isLoadingMore;
-    //是否显示的是妹子
     private boolean isGirl = true;
 
     @Override
@@ -255,9 +256,13 @@ public class MultiPersenterActivity extends BaseActivity<UserPresenter> implemen
 
     @Override
     protected void onDestroy() {
-        DefaultAdapter.releaseAllHolder(mRecyclerView);//super.onDestroy()之后会unbind,所有view被置为null,所以必须在之前调用
+        //super.onDestroy()之后会unbind,所有view被置为null,所以必须在之前调用
+        DefaultAdapter.releaseAllHolder(mRecyclerView);
         super.onDestroy();
         this.mRxPermissions = null;
         this.mPaginate = null;
+        this.mUserAdapter = null;
+        this.mGirlAdapter = null;
+        this.mGirlPresenter = null;
     }
 }

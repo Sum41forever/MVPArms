@@ -15,21 +15,26 @@
  */
 package me.jessyan.mvparms.demo.mvp.ui.holder;
 
+import android.graphics.Bitmap;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
+import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import com.jess.arms.base.BaseHolder;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.http.imageloader.ImageLoader;
 import com.jess.arms.http.imageloader.glide.ImageConfigImpl;
 import com.jess.arms.utils.ArmsUtils;
 
+import java.security.MessageDigest;
+
 import butterknife.BindView;
 import me.jessyan.mvparms.demo.R;
-import me.jessyan.mvparms.demo.mvp.model.entity.ClassDetails;
-import me.jessyan.mvparms.demo.mvp.model.entity.Girl;
+import me.jessyan.mvparms.demo.mvp.model.entity.ClassDetail;
 
 /**
  * ================================================
@@ -40,7 +45,7 @@ import me.jessyan.mvparms.demo.mvp.model.entity.Girl;
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
-public class MainItemHolder extends BaseHolder<ClassDetails> {
+public class MainItemHolder extends BaseHolder<ClassDetail> {
 
     @BindView(R.id.iv_avatar)
     ImageView mAvatar;
@@ -58,11 +63,16 @@ public class MainItemHolder extends BaseHolder<ClassDetails> {
     }
 
     @Override
-    public void setData(ClassDetails data, int position) {
+    public void setData(ClassDetail data, int position) {
 
         mName.setText(TextUtils.isEmpty(data.getTitle()) ? "" : data.getTitle());
 
-        //itemView 的 Context 就是 Activity, Glide 会自动处理并和该 Activity 的生命周期绑定
+        mImageLoader.loadImage(itemView.getContext(),
+                ImageConfigImpl
+                        .builder()
+                        .url(data.getAvatarUrl())
+                        .imageView(mAvatar)
+                        .build());
     }
 
 

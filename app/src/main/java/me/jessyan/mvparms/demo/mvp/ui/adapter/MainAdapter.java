@@ -24,7 +24,7 @@ import com.jess.arms.base.DefaultAdapter;
 import java.util.List;
 
 import me.jessyan.mvparms.demo.R;
-import me.jessyan.mvparms.demo.mvp.model.entity.ClassDetails;
+import me.jessyan.mvparms.demo.mvp.model.entity.ClassDetail;
 import me.jessyan.mvparms.demo.mvp.ui.holder.MainItemHolder;
 
 /**
@@ -36,32 +36,48 @@ import me.jessyan.mvparms.demo.mvp.ui.holder.MainItemHolder;
  * <a href="https://github.com/sum41forever">My github</a>
  * ================================================
  */
-public class MainAdapter extends DefaultAdapter<ClassDetails> {
+public class MainAdapter extends DefaultAdapter<ClassDetail> {
 
     private OnItemClickListener mOnItemClickListener;
 
 
-    public MainAdapter(List<ClassDetails> infos) {
+    public MainAdapter(List<ClassDetail> infos) {
         super(infos);
     }
 
     @Override
-    public BaseHolder<ClassDetails> getHolder(View v, int viewType) {
-        return new MainItemHolder(v);
+    public BaseHolder<ClassDetail> getHolder(View view, int viewType) {
+
+        BaseHolder<ClassDetail> holder =  new MainItemHolder(view);
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mOnItemClickListener != null) {
+                    mOnItemClickListener.onItemClick(holder, view, holder.getAdapterPosition());
+                }
+            }
+        });
+
+        return holder;
     }
 
     @Override
     public int getLayoutId(int viewType) {
-        return R.layout.recycle_list;
+        return R.layout.item_view;
     }
 
+    @Override
+    public ClassDetail getItem(int position) {
+        return mInfos.get(position);
+    }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         mOnItemClickListener = onItemClickListener;
     }
 
     public interface OnItemClickListener {
-        public void onClick(RecyclerView.ViewHolder holder, View view, int position);
+        public void onItemClick(RecyclerView.ViewHolder holder, View view, int position);
     }
 
 }
