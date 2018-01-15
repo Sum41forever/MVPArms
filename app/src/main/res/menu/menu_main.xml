@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_girl"
-        android:title="奇怪的转换器"
+        android:title="make a change"
         android:icon="@drawable/ic_more_vert_wihte_24dp"
         app:showAsAction="never" />
 </menu>
