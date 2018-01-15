@@ -14,17 +14,18 @@ import java.io.Serializable;
 public class ClassDetail implements Serializable {
 
     private final String title;
-    private final String avatarUrl;
+    @DrawableRes
+    private final Integer avatarUrl;
     private final Class<? extends Activity> activityClass;
 
-    public ClassDetail(String title, Class<? extends Activity> activityClass, String  avatarUrl) {
+    public ClassDetail(String title, Class<? extends Activity> activityClass, Integer avatarUrl) {
         super();
         this.title = title;
         this.activityClass = activityClass;
         this.avatarUrl = avatarUrl;
     }
 
-    public String getAvatarUrl() {
+    public Integer getAvatarUrl() {
         return avatarUrl;
     }
 

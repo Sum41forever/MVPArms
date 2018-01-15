@@ -1,9 +1,7 @@
 package me.jessyan.mvparms.demo.mvp.ui.activity;
 
-import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -67,9 +65,9 @@ public class MainActivity extends BaseActivity {
 
         mClassList = new ArrayList<>();
         //  基本使用
-        mClassList.add(new ClassDetail("Quick Use", UserActivity.class, "http://onro7cov0.bkt.clouddn.com/ic_jessyan.jpg"));
+        mClassList.add(new ClassDetail("Quick Use", UserActivity.class, R.drawable.ic_art1));
         //  复用Presenter
-        mClassList.add(new ClassDetail("Use Multi Presenter", MultiPersenterActivity.class, "http://onro7cov0.bkt.clouddn.com/ic_sum41.png"));
+        mClassList.add(new ClassDetail("Use Multi Presenter", MultiPersenterActivity.class, R.drawable.ic_art2));
 
         mAdapter = new MainAdapter(mClassList);
     }
@@ -95,5 +93,9 @@ public class MainActivity extends BaseActivity {
         //super.onDestroy()之后会unbind,所有view被置为null,所以必须在之前调用
         DefaultAdapter.releaseAllHolder(mRecyclerView);
         super.onDestroy();
+        this.mClassList = null;
+        this.mAdapter = null;
+        this.mLayoutManager = null;
+        this.mRecyclerView = null;
     }
 }

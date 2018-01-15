@@ -15,22 +15,12 @@
  */
 package me.jessyan.mvparms.demo.mvp.ui.holder;
 
-import android.graphics.Bitmap;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
-import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import com.jess.arms.base.BaseHolder;
-import com.jess.arms.di.component.AppComponent;
-import com.jess.arms.http.imageloader.ImageLoader;
-import com.jess.arms.http.imageloader.glide.ImageConfigImpl;
-import com.jess.arms.utils.ArmsUtils;
-
-import java.security.MessageDigest;
 
 import butterknife.BindView;
 import me.jessyan.mvparms.demo.R;
@@ -52,14 +42,8 @@ public class MainItemHolder extends BaseHolder<ClassDetail> {
     @BindView(R.id.tv_name)
     TextView mName;
 
-    private AppComponent mAppComponent;
-    private ImageLoader mImageLoader;//用于加载图片的管理类,默认使用 Glide,使用策略模式,可替换框架
-
     public MainItemHolder(View itemView) {
         super(itemView);
-        //可以在任何可以拿到 Context 的地方,拿到 AppComponent,从而得到用 Dagger 管理的单例对象
-        mAppComponent = ArmsUtils.obtainAppComponentFromContext(itemView.getContext());
-        mImageLoader = mAppComponent.imageLoader();
     }
 
     @Override
@@ -67,19 +51,9 @@ public class MainItemHolder extends BaseHolder<ClassDetail> {
 
         mName.setText(TextUtils.isEmpty(data.getTitle()) ? "" : data.getTitle());
 
-        mImageLoader.loadImage(itemView.getContext(),
-                ImageConfigImpl
-                        .builder()
-                        .url(data.getAvatarUrl())
-                        .imageView(mAvatar)
-                        .build());
+        if ( data.getAvatarUrl() != null) {
+            mAvatar.setImageResource(data.getAvatarUrl());
+        }
     }
 
-
-    @Override
-    protected void onRelease() {
-        mImageLoader.clear(mAppComponent.application(), ImageConfigImpl.builder()
-                .imageViews(mAvatar)
-                .build());
-    }
 }

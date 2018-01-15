@@ -54,7 +54,6 @@ import timber.log.Timber;
  * @see <a href="https://github.com/JessYanCoding/MVPArms/issues/181">复用的Presenter 注入简单示例</a>
  * Created by Sum41forever 2018/1/15
  * <a href="http://www.sum41forever.com/">blog</a>
- * <a href="https://github.com/Sum41forever">github</a>
  * ================================================
  */
 public class MultiPersenterActivity extends BaseActivity<UserPresenter> implements UserContract.View, GirlContract.View,  SwipeRefreshLayout.OnRefreshListener {
@@ -81,7 +80,7 @@ public class MultiPersenterActivity extends BaseActivity<UserPresenter> implemen
 
     private Paginate mPaginate;
     private boolean isLoadingMore;
-    private boolean isGirl = true;
+    private boolean isGirl = false;
 
     @Override
     public void setupActivityComponent(AppComponent appComponent) {
